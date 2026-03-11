@@ -1,0 +1,12 @@
+services:
+  collector:
+    build:
+      dockerfile_inline: |
+        FROM alpine:latest
+
+        COPY ./otelcontribcol/otelcontribcol /otelcontribcol
+        EXPOSE 4317 55680 55679
+        ENTRYPOINT ["/otelcontribcol"]
+        CMD ["--config", "/etc/otel/config.yaml"]
+    volumes:
+      - ./config.yaml:/etc/otel/config.yaml:ro
